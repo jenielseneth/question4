@@ -26,7 +26,7 @@ unsigned overlapMC(const double x2, const double R1, const double R2, size_t n, 
 	for (size_t i = n_start; i < n_end; ++i)
 	{
 		// TODO_a: implement the MC integration part here!
-		std::pair<double, double> point = (box_width*u(g)-R1, 2*box_height*u(g)-box_height);
+		std::pair<double, double> point (box_width*u(g)-R1, 2*box_height*u(g)-box_height);
 		bool in_one = std::sqrt(std::pow(point.first, 2)+ std::pow(point.second, 2)) <= R1;
 		bool in_two = std::sqrt(std::pow(12-point.first, 2)+ std::pow(point.second, 2)) <= R2;
 		
