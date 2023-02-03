@@ -20,7 +20,6 @@ unsigned overlapMC(const double x2, const double R1, const double R2, size_t n, 
 
 
 	double box_width = 2*(R1+R2)-(R1-(x2-R2));
-	double box_width_const = box_width-R1;
 	double box_height = std::max(R1, R2);
 
 	for (size_t i = n_start; i < n_end; ++i)
@@ -52,7 +51,7 @@ int main(int argc, char *argv[])
 	const double x2 = 12.0;		// x2 coordinate of second circle center
 
 	// TODO_a: calculate the rectangle area for which you uniformly sample x & y
-	const double area_rectangle;
+	const double area_rectangle = (2*(R1+R2)-(R1-(x2-R2)))*2*std::max(R1, R2);
 
 	size_t n = 1e9 + 1;// default number of MC samples
 
