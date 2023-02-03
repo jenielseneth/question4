@@ -14,9 +14,15 @@ unsigned overlapMC(const double x2, const double R1, const double R2, size_t n, 
 	std::uniform_real_distribution<double> u; // uniform distribution in [0, 1]
 
 	// TODO_b: split the amount of work as equally as possible for each process.
-	size_t n_local_size;
+	size_t n_local_size = n/procs;
 	size_t n_start = 0;
 	size_t n_end   = n;
+
+	n_start = n_local_size*rank;
+	if (rank+1==procs) {
+		n_end = n;
+	}
+	else n_end = n_local_size*(rank+1);
 
 
 	double box_width = 2*(R1+R2)-(R1-(x2-R2));
@@ -43,7 +49,12 @@ int main(int argc, char *argv[])
 	// TODO_b: Start-up the MPI environment and determine this process' rank ID as
     // well as the total number of processes (=ranks) involved in the
     // communicator
-    int rank, procs = -1;
+
+    int rank, procs;
+	MPI_Init(&argc, &argv);
+
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Comm_size(MPI_COMM_WORLD, &procs);
 
 
 	const double R1 = 5.0;		// Radius of first circle
@@ -90,7 +101,7 @@ int main(int argc, char *argv[])
 	}
 
 	// TODO_b: Shutdown the MPI environment
-
+	MPI_Finalize();
 
 	return 0;
 }
